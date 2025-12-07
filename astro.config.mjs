@@ -7,6 +7,8 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://sumeetsingh39.github.io/",
+  base: "/portfolio-system",
   markdown: {
     shikiConfig: {
       theme: "catppuccin-mocha",

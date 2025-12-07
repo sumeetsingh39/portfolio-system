@@ -18,7 +18,11 @@ const currentPath = Astro.url.pathname;
 <html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/portfolio-system/favicon.svg"
+    />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -83,30 +87,34 @@ const currentPath = Astro.url.pathname;
         >
           <nav class="flex flex-col gap-3 mt-8 font-medium font-mono">
             <a
-              href="/"
-              class={`flex items-center transition-all duration-200 ${currentPath == "/" ? "text-signal font-bold" : "text-muted hover:text-signal hover:pl-2"}`}
+              href="/portfolio-system"
+              class={`flex items-center transition-all duration-200 ${currentPath == "/portfolio-system/" ? "text-signal font-bold" : "text-muted hover:text-signal hover:pl-2"}`}
             >
-              {currentPath == "/" && <span class="text-accent mr-2">█</span>}
+              {
+                currentPath == "/portfolio-system/" && (
+                  <span class="text-accent mr-2">█</span>
+                )
+              }
               01_ABOUT
             </a>
 
             <a
-              href="/projects"
+              href="/portfolio-system/projects"
               class={`flex items-center transition-all duration-200 ${currentPath.startsWith("/projects") ? "text-signal font-bold" : "text-muted hover:text-signal hover:pl-2"}`}
             >
               {
-                currentPath.startsWith("/projects") && (
+                currentPath.startsWith("/portfolio-system/projects") && (
                   <span class="text-accent mr-2">█</span>
                 )
               }
               02_PROJECTS
             </a>
             <a
-              href="/blog"
+              href="/portfolio-system/blog"
               class={`flex items-center transition-all duration-200 ${currentPath.startsWith("/blog") ? "text-signal font-bold" : "text-muted hover:text-signal hover:pl-2"}`}
             >
               {
-                currentPath.startsWith("/blog") && (
+                currentPath.startsWith("/portfolio-system/blog") && (
                   <span class="text-accent mr-2">█</span>
                 )
               }
