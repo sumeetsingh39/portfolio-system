@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog");
+
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="BLOG // SUMEET">
+  <header class="mb-16 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
+    <h1
+      class="font-sans font-bold text-5xl md:text-8xl leading-[0.9] mb-8 text-signal tracking-tight"
+    >
+      BL<span class="text-muted">OG</span>
+    </h1>
+    <p class="text-muted max-w-2xl text-lg leading-relaxed">
+      Logs and observations from the field and lab.
+    </p>
+  </header>
+
+  <section class="opacity-0 animate-[fadeIn_0.5s_ease-out_0.2s_forwards]">
+    <div
+      class="text-xs text-accent border-b border-border pb-2 mb-8 tracking-widest"
+    >
+      :: LATEST_TRANSMISSIONS
+    </div>
+
+    <div class="flex flex-col">
+      {
+        sortedPosts.map((post) => {
+          const dateStr = post.data.date
+            .toLocaleDateString("en-US", {
+              month: "short",
+              day: "2-digit",
+            })
+            .toUpperCase();
+
+          return (
+            <a
+              href={`/blog/${post.slug}`}
+              class="group grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-2 md:gap-0 py-6 border-b border-border items-baseline hover:bg-white/5 transition-colors cursor-pointer"
+            >
+              <span class="text-sm text-muted">{dateStr}</span>
+              <h3 class="font-sans font-bold text-2xl text-signal group-hover:text-accent group-hover:translate-x-2 transition-all duration-300 tracking-tight">
+                {post.data.title}
+              </h3>
+              <div class="flex gap-2 opacity-50 md:opacity-0 group-hover:opacity-100 transition-opacity w-fit mt-2 md:mt-0">
+                {post.data.tags.slice(0, 2).map((tag: string) => (
+                  <span class="text-xs border border-muted px-2 py-1 text-muted rounded">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </a>
+          );
+        })
+      }
+      {
+        sortedPosts.length === 0 && (
+          <div class="py-12 text-center text-muted font-mono border-b border-border">
+            <span class="animate-pulse font-maple">
+              NO_SIGNALS_DETECTED <span>█</span>
+            </span>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

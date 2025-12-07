@@ -1,16 +1,134 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PhotoImg from "../images/photo.png";
+import { Image } from "astro:assets";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="SUMEET // SINGH">
+  <header
+    class="mb-16 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards] grid grid-cols-1 md:grid-cols-[1fr_200px] gap-8 items-start"
+  >
+    <div>
+      <h1
+        class="font-sans font-bold text-5xl md:text-8xl leading-[0.9] mb-8 text-signal tracking-tight"
+      >
+        WEB /
+        <span class="text-muted">DEV</span>
+      </h1>
+
+      <div class="max-w-2xl text-lg leading-relaxed text-muted">
+        <p class="text-muted max-w-2xl text-lg leading-relaxed font-mono">
+          I am a web developer based in India. I have 7 years of experience in
+          building beautiful web applications. I am a developer who believes
+          software should be quiet, fast, and reliable.
+        </p>
+      </div>
+    </div>
+
+    <div class="hidden md:block relative group">
+      <Image
+        src={PhotoImg}
+        alt="Profile photo"
+        class="w-full aspect-square object-cover border border-border transition-all duration-500"
+      />
+
+      <div
+        class="absolute inset-0 bg-void/10 pointer-events-none border border-border"
+      >
+      </div>
+
+      <div
+        class="mt-2 text-[10px] text-accent font-mono tracking-widest text-right"
+      >
+        :: OPERATOR_IMG_01
+      </div>
+    </div>
+  </header>
+
+  <section class="opacity-0 animate-[fadeIn_0.5s_ease-out_0.2s_forwards] mt-16">
+    <div
+      class="text-xs text-accent border-b border-border pb-2 mb-8 tracking-widest"
+    >
+      :: SYSTEM_ACTIONS
+    </div>
+
+    <div
+      class="flex flex-col md:flex-row gap-6 items-start opacity-0 animate-[fadeIn_0.5s_ease-out_0.2s_forwards]"
+    >
+      <a
+        href="/resume.pdf"
+        download
+        class="group flex items-center gap-4 px-6 py-4 border border-border hover:border-accent hover:bg-accent transition-all duration-300"
+      >
+        <div class="flex flex-col">
+          <span
+            class="text-xs text-muted group-hover:text-void transition-colors duration-300 font-maple"
+            >EXECUTE:</span
+          >
+          <span
+            class="font-bold text-signal text-lg group-hover:tracking-widest group-hover:text-void transition-all duration-300 font-maple"
+            >DOWNLOAD_CV</span
+          >
+          <span
+            class="text-muted group-hover:text-void duration-300 font-maple"
+          >
+            PDF
+          </span>
+        </div>
+      </a>
+
+      <a
+        href="mailto:hello@dev.io"
+        class="group flex items-center gap-4 px-6 py-4 border border-border hover:border-accent hover:bg-accent transition-all duration-300"
+      >
+        <div class="flex flex-col">
+          <span
+            class="text-xs text-muted group-hover:text-void duration-300 transition-colors font-maple"
+            >CONTACT:</span
+          >
+          <span
+            class="font-bold text-signal text-lg group-hover:tracking-widest group-hover:text-void transition-all duration-300 font-maple"
+            >INIT_COMMS</span
+          >
+          <span class="group-hover:text-void duration-300 font-maple"
+            >sumeetsngh0@gmail.com</span
+          >
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="opacity-0 animate-[fadeIn_0.5s_ease-out_0.2s_forwards] mt-16">
+    <div
+      class="text-xs text-accent border-b border-border pb-2 tracking-widest"
+    >
+      :: LOADED_MODULES
+    </div>
+    <div class="flex flex-col">
+      <div
+        class="group grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-0 py-6 border-b border-border items-baseline"
+      >
+        <span class="text-muted font-maple">Frameworks / Libraries</span>
+        <span> React / NextJS, Vue, Astro, Express </span>
+      </div>
+      <div
+        class="group grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-0 py-6 border-b border-border items-baseline"
+      >
+        <span class="text-muted font-maple">Languages</span>
+        <span> JavaScript, Typescript, Python, C, C++, C# </span>
+      </div>
+      <div
+        class="group grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-0 py-6 border-b border-border items-baseline"
+      >
+        <span class="text-muted font-maple">Learning</span>
+        <span> Rust, SQLite, GO </span>
+      </div>
+      <div
+        class="group grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-0 py-6 border-b border-border items-baseline"
+      >
+        <span class="text-muted font-maple">Environment</span>
+        <span> Arch Linux, VSCode, Neovim </span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,375 @@
+---
+title: "Javascript - The Hard Parts"
+description: "Just some lessons from my Frontend Masters Journey"
+date: "2025-12-05"
+tags: ["Javascript", "React"]
+---
+
+import logo from "../../images/frontendMasters.webp";
+import { Image } from "astro:assets";
+
+<div class="my-8 border border-border p-2 text-center w-auto">
+  <Image
+    src={logo}
+    alt="Logo"
+    class="grayscale hover:grayscale-0 transition-all duration-500 w-1/2 h-auto m-auto"
+  />
+  <p class="text-xs text-center mt-2 text-muted font-mono">
+    FIG_01: SYSTEM_DESIGN
+  </p>
+</div>
+
+### JS Principles: The Runtime Environment
+
+JS is a single-threaded language (it does one thing at a time) that runs in a specific environment. This environment has three key components:
+
+- **Call Stack:** A stack (last-in, first-out) that keeps track of which function is currently being executed. When a function is called, it's added to the top. When it returns, it's popped off.
+- **Heap:** A large, unstructured block of memory where all objects, arrays, and functions are stored. When you create an object (e.g., `let obj = {}`), the `obj` variable on the stack holds a reference to that object's location in the heap.
+- **Execution Context:** The "environment" a function runs in. It contains the code to be executed and a link to its "Lexical Environment" (its scope, or the variables it has access to).
+  - There is one **Global Execution Context** (the base level).
+  - A new **Function Execution Context** is created _every time_ a function is called, creating its own local memory/scope.
+
+### Higher-Order Functions (HOF)
+
+A function that either:
+
+1. Takes another function as an argument.
+2. Returns a function.
+
+They are used to create more abstract, flexible, and reusable code. Common examples you use all the time are `.map()`, `.filter()`, and `.reduce()`.
+
+```javascript
+// Your example is great for showing this:
+const arr = [];
+
+function addToArr(num, func) {
+  arr.push(func(num));
+}
+
+addToArr(3, (n) => n + 2); // `n => n + 2` is the function argument
+addToArr(5, (n) => 32 * n); // `n => 32 * n` is the function argument
+```
+
+### Closure
+
+A closure is the combination of a function and the **lexical environment** (scope) in which it was declared.
+
+- This means a function "remembers" the variables from its outer scope, even after that outer function has finished running.
+- It's like a **backpack** of variables that the function carries with it.
+- This "backpack" is only packed with variables that the returned function _actually references_.
+
+```javascript
+function Outer() {
+  // to 'Outer'. Without it, 'num = 0' becomes an
+  // accidental global variable.
+  let num = 0;
+
+  function Inner() {
+    return num++;
+  }
+  return Inner;
+}
+
+const func = Outer();
+
+// 'Outer()' has finished and its execution context is gone.
+// But 'func' (which is 'Inner') still has a closure "backpack"
+// containing the 'num' variable.
+
+console.log(func()); // 0
+console.log(func()); // 1
+```
+
+### Asynchronous JavaScript
+
+JS is single-threaded, but it can _offload_ tasks to the surrounding environment (like the **Browser APIs** or **Node.js APIs**). This allows JS to continue running synchronous code without waiting.
+
+1. The **Call Stack** runs synchronous code.
+2. When it hits an async operation (e.g., `setTimeout`, `fetch`), it hands it off to the **Web API**.
+3. JS continues running code. The Call Stack may even become empty.
+4. When the Web API finishes its task (e.g., the timer runs out, the data arrives), it pushes the **callback function** to a queue.
+
+   - **Microtask Queue (High Priority):** For `Promise` resolutions (`.then`, `.catch`, `.finally`) and `async/await`.
+   - **Task Queue (or "Callback Queue"):** For `setTimeout`, `setInterval`, click events, I/O.
+
+5. The **Event Loop** constantly checks: "Is the Call Stack empty?"
+6. If the Call Stack is empty, it checks the **Microtask Queue** first. It runs _all_ microtasks to completion before moving on.
+7. If the Microtask Queue is _also_ empty, it takes _one_ task from the **Task Queue** and pushes it onto the Call Stack to be run.
+
+### Promises
+
+An object representing the eventual completion (or failure) of an asynchronous operation. A promise has three states:
+
+1. **Pending:** The initial state; the operation is not yet complete.
+2. **Fulfilled (Resolved):** The operation completed successfully, and the promise now has a resulting value.
+3. **Rejected:** The operation failed, and the promise has an error/reason.
+
+Promises solve "Callback Hell" by allowing you to chain `.then()` methods, keeping the code flat and readable.
+
+```javascript
+// Example of solving callback hell (the "pyramid of doom")
+getUser(1)
+  .then((user) => getPosts(user.id))
+  .then((posts) => getComments(posts[0].id))
+  .then((comments) => console.log(comments))
+  .catch((err) => console.error(err));
+```
+
+**Async/Await:** This is modern "syntactic sugar" built on top of Promises. It lets you write asynchronous code that _looks_ synchronous, making it even easier to read.
+
+```javascript
+async function showComments() {
+  try {
+    const user = await getUser(1);
+    const posts = await getPosts(user.id);
+    const comments = await getComments(posts[0].id);
+    console.log(comments);
+  } catch (err) {
+    console.error(err);
+  }
+}
+```
+
+### Classes and Prototypes (Prototypal Inheritance)
+
+This is how JavaScript handles inheritance. Every object has a hidden internal link to another object, called its **prototype**.
+
+- When you try to access a property on an object, JS first checks the object itself.
+- If it doesn't find it, it looks at the object's prototype.
+- It continues this "prototype chain" all the way up to `Object.prototype`, which is the top-level prototype (and its prototype is `null`).
+
+**Ways to create/link prototypes:**
+
+1. **`Object.create()` (The "pure" way):**
+
+   ```javascript
+   const person = {
+     isHuman: false,
+     printIntroduction() {
+       console.log(`My name is ${this.name}. Am I human? ${this.isHuman}`);
+     },
+   };
+
+   const me = Object.create(person); // 'me' is now linked to 'person'
+   ```
+
+2. **Constructor Functions (The "classic" way):**
+
+   ```javascript
+   // A constructor function (by convention, starts with a Capital)
+   function Box(value) {
+     this.value = value;
+   }
+
+   // Methods are added to the .prototype property
+   Box.prototype.getValue = function () {
+     return this.value;
+   };
+
+   const box1 = new Box(1); // 'new' keyword links box1 to Box.prototype
+   ```
+
+3. **`class` (The "modern" way):** This is "syntactic sugar" over constructor functions. It does the _exact same thing_ but is easier to read.
+
+   ```javascript
+   class Box {
+     constructor(value) {
+       this.value = value;
+     }
+
+     // This method is automatically placed on Box.prototype
+     getValue() {
+       return this.value;
+     }
+   }
+
+   const box1 = new Box(1);
+   ```
+
+## Deep JavaScript Foundations
+
+### Types and Coercion
+
+- `typeof` always returns a string (e.g., `"number"`, `"string"`, `"object"`, `"function"`, `"undefined"`, `"boolean"`, `"symbol"`, `"bigint"`).
+- Note: `typeof null` is `"object"` (a famous bug in JS).
+
+**"Gotchas"**
+
+- **`NaN`:** (Not a Number)
+  - `typeof NaN` is `"number"`.
+  - `isNaN("hello")` is `true` (it coerces "hello" to `NaN`).
+  - `Number.isNaN("hello")` is `false` (it _doesn't_ coerce, it just checks if the value _is_ `NaN`). Use this one.
+  - `NaN` is the only value in JS not equal to itself: `NaN === NaN` is `false`. The check `x !== x` is only true for `NaN`.
+- **`-0`:**
+  - `-0 === 0` is `true`. They are strictly equal, but are internally different values.
+
+**Type Conversion (Coercion)**
+
+- **Explicit Coercion:** Using `String()`, `Number()`, `Boolean()`. This is clear and preferred.
+- **Implicit Coercion:** When JS automatically converts types.
+  - `+` before a variable coerces it to a number (e.g., `+"5"` is `5`).
+  - `[]` coerces to `0`. `[""]` also coerces to `0`.
+- **Boxing:** The automatic wrapping of a primitive (like `"hello"`) into its object equivalent (`new String("hello")`) so that you can access methods like `.toUpperCase()`.
+
+**`==` (Abstract Equality) vs. `===` (Strict Equality)**
+
+- **`===` (Strict):** Checks for type _and_ value. If types are different, it's `false`. No coercion. **(Always default to this).**
+- **`==` (Abstract):** If types are different, it _tries to coerce_ one or both values to a matching type (usually a number) before comparing.
+  - `"5" == 5` is `true` (coerces `"5"` to `5`).
+  - `null == undefined` is `true` (a special rule).
+  - `[] == 0` is `true` (coerces `[]` to `""`, then to `0`).
+
+**Falsy Values** When coercing to a boolean (e.g., in an `if` statement), a few specific values are considered `false`.
+
+- `false`
+- `0`
+- `-0`
+- `0n` (BigInt zero)
+- `""` (empty string)
+- `null`
+- `undefined`
+- `NaN`
+
+**Everything else is truthy.** (Including `[]`, `{}`, `"0"`, `"false"`).
+
+## Vanilla JS
+
+### The DOM
+
+Most DOM APIs that returns a collection return `HTMLCollection`. It doesn’t have array functions attached to it. Only one that has some array functions attached to it is `querySelectorAll`, because it returns `NodeList`.
+
+> [!tip]
+> We can use `Array.from(HTMLCollection)` to get all array functions on collection.
+
+**async vs defer**
+
+- `script` don’t need to be put at bottom anymore. They can be included in`head`.
+- But when browser sees `script`, it halts the parsing and download & execute js file before resuming the parsing.
+- `defer` tells browser to download in parallel and execute after parsing is done.
+- `async` tells it to download it in parallel but halt and execute as soon as download is done.
+  You can add `type="module"` to make use of ES6 module imports. It helps in keeping variables separate, & it also make the code look cleaner. Remember to add `.js` at the end of imports as this is not a library with a bundler that can add it automatically. Browser won’t do that it will give error.
+
+---
+
+Better to wait for `DOMContentLoaded` rather than `load`.
+
+```javascript
+window.addEventListener("DOMContentLoaded", callback);
+```
+
+### Events
+
+Naming conventions for events is all lower case letters without space. `DOMContentLoaded` is an exception.
+
+Event can be added by `onevent` or with `addEventListener`. `onevent` is a property on element so it gets replaced when you add it second time. So it’s generally better to use `addEventListener`.
+
+### Custom Components
+
+To create a custom component we would have to create a new `class` and define a custom element using that `class`.
+
+```javascript
+export class DetailsPage extends HTMLElement {
+  //We need to export it
+  constructor() {
+    super();
+    //We can't add children directly to our component here.
+    // We can use shadow DOM though
+    // Below steps are __optional__
+    this.root = this.attachShadow({ mode: "open" }); //Attach shadowDOM
+    //We can clone a template like this
+    const template = document.getElementById("details-page-template");
+    const content = template.content.cloneNode(true);
+
+    //Adding style through external file might require fetchonst template = document.getElementById("details-page-template");
+    const content = template.content.cloneNode(true);
+    const styles = document.createElement("style");
+    this.root.appendChild(content);
+    this.root.appendChild(styles);
+
+    async function loadCSS() {
+      const request = await fetch("/components/DetailsPage.css");
+      styles.textContent = await request.text();
+    }
+    loadCSS();
+  }
+
+  connectedCallback() {} //This function is where we attach elements to our component
+}
+
+customElements.define("details-page", DetailsPage);
+```
+
+> [!important]
+> Do not forget to import it in your main JS file. Since browser doesn’t know about this component, you have to tell it.
+
+### Proxy
+
+We can create proxy to do some action when data is accessed, updated in an object.
+It takes 2 parameters `target` & `handler`.
+Handler function could with getter or setter. They take `target`, `property` & `receiver` / `value` as parameters.
+It basically traps the get and set call to object to perform some actions.
+
+```javascript
+const Store = {
+  menu: null,
+  cart: [],
+};
+
+const proxiedStore = new Proxy(Store, {
+  set(target, property, value) {
+    target[property] = value;
+    if (property == "menu") {
+      window.dispatchEvent(new Event("appmenuchange"));
+    }
+    if (property == "cart") {
+      window.dispatchEvent(new Event("appcartchange"));
+    }
+    return true;
+  },
+  get(target, property, receiver) {
+    if (property != "menu" || property != "cart") {
+      return "Error!! This property doesn't exist";
+    } else {
+      return Reflect.get(...arguments);
+    }
+  },
+});
+
+export default proxiedStore;
+```
+
+## Web Performance Fundamentals
+
+### Web Vitals
+
+1. **Core web vitals**
+   - Largest Contentful Paint (LCP)
+   - Cumulative Layout Shift (CLS)
+   - Interaction to Next Paint (INP)
+2. **Others**
+   - First Input Delay (FID)
+   - Time to First Byte (TTFB)
+   - First Contentful Paint (FCP)
+
+### Capturing Performance
+
+We can use performance APIs like `Performance.now()` or `Performance.timeOrigin()`.
+
+#### PerformanceObserver
+
+`PerformanceObserver` takes a callback which takes in a list of entries, on which you can observe any type of performance metric.
+
+```javascript
+function perfObserver(list, observer) {
+  list.getEntries().forEach((entry) => {
+    if (entry.entryType === "mark") {
+      console.log(`${entry.name}'s startTime: ${entry.startTime}`);
+    }
+    if (entry.entryType === "measure") {
+      console.log(`${entry.name}'s duration: ${entry.duration}`);
+    }
+  });
+}
+const observer = new PerformanceObserver(perfObserver);
+observer.observe({ entryTypes: ["measure", "mark"] });
+```

@@ -1,0 +1,79 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="404 // SINGH">
+  <div
+    class="flex flex-col items-center justify-center h-full min-h-[60vh] text-center"
+  >
+    <!-- Error Status -->
+    <div class="mb-4 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
+      <span class="inline-block w-2 h-2 bg-accent rounded-full animate-pulse"
+      ></span>
+      <span class="text-xs text-accent font-mono tracking-widest ml-2"
+        >CRITICAL_FAILURE</span
+      >
+    </div>
+
+    <!-- Giant Signal Header -->
+    <h1
+      class="font-sans font-black text-[8rem] md:text-[12rem] text-signal mb-8 tracking-tighter leading-none opacity-0 animate-[fadeIn_0.5s_ease-out_0.1s_forwards]"
+    >
+      404
+    </h1>
+
+    <!-- The "Terminal Trace" -->
+    <div
+      class="font-maple text-muted text-sm max-w-md mb-12 border-l-2 border-border pl-6 text-left mx-auto opacity-0 animate-[fadeIn_0.5s_ease-out_0.2s_forwards]"
+    >
+      <p class="mb-2">
+        <span class="text-accent">></span> ERROR_CODE: FILE_NOT_FOUND
+      </p>
+      <p class="mb-2">
+        <span class="text-accent">></span> PATH: {Astro.url.pathname}
+      </p>
+      <p class="mb-2">
+        <span class="text-accent">></span> DIAGNOSTIC: The requested sector is empty
+        or corrupted.
+      </p>
+      <p class="text-signal animate-pulse">
+        <span class="text-accent">></span> STATUS: WAITING_FOR_INPUT_<span
+          class="inline-block w-2 h-4 bg-signal ml-1 align-middle"></span>
+      </p>
+    </div>
+
+    <!-- Return Action (Solid Fill Style) -->
+    <div class="opacity-0 animate-[fadeIn_0.5s_ease-out_0.3s_forwards]">
+      <a
+        href="/"
+        class="group relative inline-flex items-center gap-3 px-8 py-4 bg-void border border-border hover:bg-accent hover:border-accent transition-all duration-300"
+      >
+        <!-- Hover Fill Background -->
+        <div
+          class="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+        </div>
+
+        <!-- Text Content -->
+        <span
+          class="relative z-10 font-bold text-signal group-hover:text-void transition-colors text-lg tracking-widest"
+        >
+          :: REBOOT_SYSTEM
+        </span>
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

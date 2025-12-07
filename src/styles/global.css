@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Spline Sans Mono", "Maple Mono", monospace;
+  --font-maple: "Maple Mono", monospace;
+  --color-void: var(--bg);
+  --color-signal: var(--text-main);
+  --color-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --grid-cols-layout: "280px 1fr";
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 2px;
+}
+
+pre,
+code {
+  font-family: var(--font-maple);
+}

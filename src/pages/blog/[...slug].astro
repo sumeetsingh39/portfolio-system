@@ -1,0 +1,227 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog");
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const formattedDate = entry.data.date
+  .toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  })
+  .toUpperCase();
+---
+
+<BaseLayout title={`BLOG // ${entry.data.title}`}>
+  <div class="max-w-3xl opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
+    <a
+      href="/blog"
+      class="group inline-flex items-center text-sm text-muted mb-12 hover:text-accent transition-colors"
+    >
+      <span
+        class="mr-2 group-hover:-translate-x-1 transition-transform font-maple"
+        >{"<"}</span
+      > BACK_TO_LOGS
+    </a>
+
+    <header class="mb-12 border-b border-border pb-8">
+      <div
+        class="flex items-center gap-4 mb-4 text-xs font-maple text-muted tracking-widest"
+      >
+        <span>{formattedDate}</span>
+        <span class="text-border">/</span>
+        <span>LOG_ID: {entry.slug.toUpperCase()}</span>
+      </div>
+
+      <h1
+        class="font-sans font-bold text-4xl md:text-6xl text-signal mb-6 leading-tight tracking-tight"
+      >
+        {entry.data.title}
+      </h1>
+
+      <div class="flex gap-2">
+        {
+          entry.data.tags.map((tag: string) => (
+            <span class="text-[10px] px-2 py-1 border border-border text-muted font-mono rounded">
+              {tag}
+            </span>
+          ))
+        }
+      </div>
+    </header>
+
+    <article class="prose-system">
+      <Content />
+    </article>
+  </div>
+</BaseLayout>
+
+<script>
+  const blockquotes = document.querySelectorAll(".prose-system blockquote");
+
+  blockquotes.forEach((bq) => {
+    const p = bq.querySelector("p");
+    if (!p) return;
+
+    const content = p.innerHTML;
+    const match = content.match(/^\[!(.*?)\]/);
+
+    if (match) {
+      const type = match[1].toLowerCase(); // info, warning, danger, etc.
+
+      bq.setAttribute("data-callout", type);
+
+      p.innerHTML = content.replace(/^\[!.*?\]\s*/, "");
+
+      const label = document.createElement("div");
+      label.className = "callout-label";
+      label.innerText = `:: SYSTEM_${type.toUpperCase()}`;
+      bq.prepend(label);
+    }
+  });
+</script>
+
+<style is:global>
+  .prose-system {
+    color: var(--text-muted);
+    font-family: "Spline Sans Mono", monospace;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .prose-system h1,
+  .prose-system h2,
+  .prose-system h3 {
+    color: var(--text-main);
+    font-family: "Inter", sans-serif;
+    font-weight: 800;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .prose-system h2 {
+    font-size: 1.8rem;
+  }
+  .prose-system h3 {
+    font-size: 1.4rem;
+  }
+
+  .prose-system p {
+    margin-bottom: 1.5rem;
+  }
+  .prose-system strong {
+    color: var(--text-main);
+    font-weight: 600;
+  }
+  .prose-system a {
+    color: var(--text-main);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 4px;
+  }
+  .prose-system a:hover {
+    color: var(--accent);
+  }
+
+  .prose-system pre {
+    background-color: #0d0d0d !important; /* Force Void-like background */
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 0;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+
+  .prose-system code {
+    font-family: "Maple Mono", "Spline Sans Mono", monospace;
+    font-size: 1em;
+  }
+
+  .prose-system p code {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    color: var(--text-main);
+  }
+
+  /* --- OBSIDIAN CALLOUTS STYLING --- */
+  .prose-system blockquote {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 2px solid var(--border);
+    position: relative;
+  }
+
+  .callout-label {
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-family: "Inter", sans-serif;
+  }
+
+  /* INFO / NOTE (Blue/Cyan) */
+  .prose-system blockquote[data-callout="info"],
+  .prose-system blockquote[data-callout="tip"],
+  .prose-system blockquote[data-callout="note"] {
+    border-left-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.05);
+  }
+  .prose-system blockquote[data-callout="info"] .callout-label,
+  .prose-system blockquote[data-callout="tip"] .callout-label,
+  .prose-system blockquote[data-callout="note"] .callout-label {
+    color: #3b82f6;
+  }
+
+  /* WARNING / ALERT (Accent/Orange) */
+  .prose-system blockquote[data-callout="warning"],
+  .prose-system blockquote[data-callout="important"],
+  .prose-system blockquote[data-callout="alert"] {
+    border-left-color: var(--accent);
+    background: rgba(255, 77, 0, 0.05);
+  }
+  .prose-system blockquote[data-callout="warning"] .callout-label,
+  .prose-system blockquote[data-callout="important"] .callout-label,
+  .prose-system blockquote[data-callout="alert"] .callout-label {
+    color: var(--accent);
+  }
+
+  /* ERROR / DANGER (Red) */
+  .prose-system blockquote[data-callout="danger"],
+  .prose-system blockquote[data-callout="bug"],
+  .prose-system blockquote[data-callout="error"] {
+    border-left-color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+  }
+  .prose-system blockquote[data-callout="danger"] .callout-label,
+  .prose-system blockquote[data-callout="bug"] .callout-label,
+  .prose-system blockquote[data-callout="error"] .callout-label {
+    color: #ef4444;
+  }
+</style>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
