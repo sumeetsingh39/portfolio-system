@@ -4,11 +4,13 @@
   font-family: "Maple Mono";
   src: url(/fonts/MapleMono-NF-Regular.ttf) format(truetype);
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Maple Mono";
   src: url(/fonts/MapleMono-NF-Italic.ttf) format(truetype);
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -16,20 +18,23 @@
   src: url(/fonts/Mabry-Regular.woff2) format(woff2);
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Mabry";
   src: url(/fonts/Mabry-Italic.woff2) format(woff2);
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Mabry";
   src: url(/fonts/Mabry-Bold.woff2) format(woff2);
   font-weight: bold;
+  font-display: swap;
 }
 
 @theme {
-  --font-sans: "Mabry", "Inter", sans-serif;
+  --font-sans: "Mabry", sans-serif;
   --font-mono: "Spline Sans Mono", "Maple Mono", monospace;
   --font-maple: "Maple Mono", "Spline Sans Mono", monospace;
   --color-void: var(--bg);
