@@ -9,8 +9,8 @@ const sortedPosts = allPosts.sort(
 );
 ---
 
-<BaseLayout title="BLOG // SUMEET">
-  <header class="mb-16 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
+<BaseLayout title="BLOG // SUMEET"
+  ><header class="mb-16 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
     <h1
       class="font-sans font-bold text-5xl md:text-8xl leading-[0.9] mb-8 text-signal tracking-tight"
     >
@@ -61,7 +61,7 @@ const sortedPosts = allPosts.sort(
       {
         sortedPosts.length === 0 && (
           <div class="py-12 text-center text-muted font-mono border-b border-border">
-            <span class="animate-pulse font-maple">
+            <span class="animate-pulse font-mono">
               NO_SIGNALS_DETECTED <span>█</span>
             </span>
           </div>
@@ -70,16 +70,3 @@ const sortedPosts = allPosts.sort(
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-</style>

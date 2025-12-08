@@ -71,7 +71,7 @@ const projects = [
                   <span
                     class={`w-2 h-2 rounded-full animate-pulse ${statusClass}`}
                   />
-                  <span class="text-xs text-muted font-maple">
+                  <span class="text-xs text-muted font-mono">
                     {project.status.toLocaleUpperCase()} // {project.year}
                   </span>
                 </div>
@@ -92,7 +92,7 @@ const projects = [
               <div class="flex flex-wrap gap-2 mt-auto">
                 {project.tech.map((t) => {
                   return (
-                    <span class="text-xs font-maple border border-border px-2 py-1 text-muted group-hover:text-signal transition-colors">
+                    <span class="text-xs font-mono border border-border px-2 py-1 text-muted group-hover:text-signal transition-colors">
                       [{t}]
                     </span>
                   );

@@ -6,7 +6,7 @@ import { Image } from "astro:assets";
 
 <BaseLayout title="SUMEET // SINGH">
   <header
-    class="mb-16 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards] grid grid-cols-1 md:grid-cols-[1fr_200px] gap-8 items-start"
+    class="md:mb-16 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards] grid grid-cols-1 md:grid-cols-[1fr_200px] gap-8 items-start"
   >
     <div>
       <h1
@@ -62,16 +62,14 @@ import { Image } from "astro:assets";
       >
         <div class="flex flex-col">
           <span
-            class="text-xs text-muted group-hover:text-void transition-colors duration-300 font-maple"
+            class="text-xs text-muted group-hover:text-void transition-colors duration-300 font-mono"
             >EXECUTE:</span
           >
           <span
-            class="font-bold text-signal text-lg group-hover:tracking-widest group-hover:text-void transition-all duration-300 font-maple"
+            class="font-bold text-signal text-lg group-hover:tracking-widest group-hover:text-void transition-all duration-300 font-mono"
             >DOWNLOAD_CV</span
           >
-          <span
-            class="text-muted group-hover:text-void duration-300 font-maple"
-          >
+          <span class="text-muted group-hover:text-void duration-300 font-mono">
             PDF
           </span>
         </div>
@@ -83,14 +81,14 @@ import { Image } from "astro:assets";
       >
         <div class="flex flex-col">
           <span
-            class="text-xs text-muted group-hover:text-void duration-300 transition-colors font-maple"
+            class="text-xs text-muted group-hover:text-void duration-300 transition-colors font-mono"
             >CONTACT:</span
           >
           <span
-            class="font-bold text-signal text-lg group-hover:tracking-widest group-hover:text-void transition-all duration-300 font-maple"
+            class="font-bold text-signal text-lg group-hover:tracking-widest group-hover:text-void transition-all duration-300 font-mono"
             >INIT_COMMS</span
           >
-          <span class="group-hover:text-void duration-300 font-maple"
+          <span class="group-hover:text-void duration-300 font-mono"
             >sumeetsngh0@gmail.com</span
           >
         </div>
@@ -108,26 +106,70 @@ import { Image } from "astro:assets";
       <div
         class="group grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-0 py-6 border-b border-border items-baseline"
       >
-        <span class="text-muted font-maple">Frameworks / Libraries</span>
+        <span class="text-muted font-mono">Frameworks / Libraries</span>
         <span> React / NextJS, Vue, Astro, Express </span>
       </div>
       <div
         class="group grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-0 py-6 border-b border-border items-baseline"
       >
-        <span class="text-muted font-maple">Languages</span>
+        <span class="text-muted font-mono">Languages</span>
         <span> JavaScript, Typescript, Python, C, C++, C# </span>
       </div>
       <div
         class="group grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-0 py-6 border-b border-border items-baseline"
       >
-        <span class="text-muted font-maple">Learning</span>
+        <span class="text-muted font-mono">Learning</span>
         <span> Rust, SQLite, GO </span>
       </div>
       <div
         class="group grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-0 py-6 border-b border-border items-baseline"
       >
-        <span class="text-muted font-maple">Environment</span>
+        <span class="text-muted font-mono">Environment</span>
         <span> Arch Linux, VSCode, Neovim </span>
+      </div>
+    </div>
+  </section>
+  <section
+    class="opacity-0 animate-[fadeIn_0.5s_ease-out_0.3s_forwards] mb-16 mt-16"
+  >
+    <div
+      class="text-xs text-accent border-b border-border pb-2 mb-8 tracking-widest"
+    >
+      :: RUNTIME_HISTORY
+    </div>
+
+    <div class="space-y-8">
+      <!-- Work Item 1 -->
+      <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4">
+        <div class="text-muted font-mono text-sm pt-1">2021 - PRES</div>
+        <div>
+          <h3 class="text-signal font-bold text-lg mb-1">UI ENGINEER</h3>
+          <div class="text-xs text-accent font-mono mb-3">PEGASYSTEMS</div>
+        </div>
+      </div>
+
+      <!-- Work Item 2 -->
+      <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4">
+        <div class="text-muted font-mono text-sm pt-1">2018 - 2021</div>
+        <div>
+          <h3 class="text-signal font-bold text-lg mb-1">PROJECT ENGINEER</h3>
+          <div class="text-xs text-accent font-mono mb-3">WIPRO_LTD</div>
+        </div>
+      </div>
+
+      <!-- Education / Separator -->
+      <div
+        class="border-t border-border/50 pt-8 mt-4 grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4"
+      >
+        <div class="text-muted font-mono text-sm pt-1">2014 - 2018</div>
+        <div>
+          <h3 class="text-signal font-bold text-lg mb-1">
+            BACHELORS IN ENGINEERING
+          </h3>
+          <div class="text-xs text-accent font-mono mb-2">
+            GOVERNMENT_COLLEGE_OF_ENGINEERING
+          </div>
+        </div>
       </div>
     </div>
   </section>
