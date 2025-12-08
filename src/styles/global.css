@@ -14,27 +14,87 @@
 }
 
 @font-face {
-  font-family: "Mabry";
-  src: url(/fonts/Mabry-Regular.woff2) format(woff2);
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-BoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-BlackItalic.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mabry Pro";
+  src: url("/fonts/MabryPro-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
-@font-face {
-  font-family: "Mabry";
-  src: url(/fonts/Mabry-Italic.woff2) format(woff2);
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Mabry";
-  src: url(/fonts/Mabry-Bold.woff2) format(woff2);
-  font-weight: bold;
-  font-display: swap;
-}
 
 @theme {
-  --font-sans: "Mabry", sans-serif;
+  --font-sans: "Mabry Pro", sans-serif;
   --font-mono: "Spline Sans Mono", "Maple Mono", monospace;
   --font-maple: "Maple Mono", "Spline Sans Mono", monospace;
   --color-void: var(--bg);
