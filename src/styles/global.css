@@ -1,19 +1,6 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "Maple Mono";
-  src: url(/fonts/MapleMono-NF-Regular.ttf) format(truetype);
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Maple Mono";
-  src: url(/fonts/MapleMono-NF-Italic.ttf) format(truetype);
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "Mabry Pro";
   src: url("/fonts/MabryPro-Bold.ttf") format("truetype");
   font-weight: bold;
@@ -95,8 +82,8 @@
 
 @theme {
   --font-sans: "Mabry Pro", sans-serif;
-  --font-mono: "Spline Sans Mono", "Maple Mono", monospace;
-  --font-maple: "Maple Mono", "Spline Sans Mono", monospace;
+  --font-mono: "Spline Sans Mono", monospace;
+  /* --font-maple: "Maple Mono", "Spline Sans Mono", monospace; */
   --color-void: var(--bg);
   --color-signal: var(--text-main);
   --color-muted: var(--text-muted);
