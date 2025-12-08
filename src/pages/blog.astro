@@ -16,7 +16,7 @@ const sortedPosts = allPosts.sort(
     >
       BL<span class="text-muted">OG</span>
     </h1>
-    <p class="text-muted max-w-2xl text-lg leading-relaxed">
+    <p class="text-muted max-w-2xl text-2xl font-sans leading-relaxed">
       Logs and observations from the field and lab.
     </p>
   </header>
@@ -44,8 +44,23 @@ const sortedPosts = allPosts.sort(
               class="group grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-2 md:gap-0 py-6 border-b border-border items-baseline hover:bg-white/5 transition-colors cursor-pointer"
             >
               <span class="text-sm text-muted">{dateStr}</span>
-              <h3 class="font-sans font-bold text-2xl text-signal group-hover:text-accent group-hover:translate-x-2 transition-all duration-300 tracking-tight">
+              <h3 class="font-sans font-bold text-2xl text-signal group-hover:text-accent group-hover:translate-x-2 transition-all duration-300 tracking-tight flex items-center gap-2 ">
                 {post.data.title}
+                <svg
+                  class="opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  width="16"
+                  height="12"
+                  viewBox="0 0 16 12"
+                  aria-hidden="true"
+                  role="img"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11.0161 4.48205C9.73854 3.57477 9.02498 2.33033 8.8754 0.748717C8.86559 0.640824 8.91341 0.574618 9.01885 0.550096L11.3251 0.00572808C11.3526 -0.000786781 11.3812 -0.00175522 11.4091 0.00287837C11.437 0.00751197 11.4637 0.0176552 11.4877 0.0327175C11.5117 0.0477799 11.5324 0.0674597 11.5487 0.0906112C11.5649 0.113763 11.5765 0.139923 11.5825 0.167567C12.1747 2.67239 12.8883 4.28343 15.783 4.62918C15.9277 4.64634 16 4.72726 16 4.87194V6.72205C16.0003 6.84617 15.957 6.96645 15.8777 7.06191C15.7984 7.15737 15.6881 7.22194 15.566 7.24435C13.1212 7.70289 11.8044 9.18151 11.6156 11.6802C11.6058 11.8224 11.531 11.8776 11.3913 11.8457L9.01885 11.2793C8.88398 11.2474 8.82636 11.164 8.84598 11.0292C9.07402 9.53584 9.76797 8.30856 10.9278 7.34734C11.0872 7.21492 11.0639 7.14872 10.8579 7.14872L0.426667 7.15975C0.313508 7.15975 0.204983 7.1148 0.124968 7.03478C0.0449522 6.95477 0 6.84624 0 6.73308V4.95285C0 4.83515 0.0600765 4.77508 0.18023 4.77262L10.9425 4.7101C11.2025 4.7101 11.227 4.63408 11.0161 4.48205Z"
+                    fill="currentColor"
+                  />
+                </svg>
               </h3>
               <div class="flex gap-2 opacity-50 md:opacity-0 group-hover:opacity-100 transition-opacity w-fit mt-2 md:mt-0">
                 {post.data.tags.slice(0, 2).map((tag: string) => (

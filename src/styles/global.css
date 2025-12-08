@@ -11,8 +11,25 @@
   font-style: italic;
 }
 
+@font-face {
+  font-family: "Mabry";
+  src: url(/fonts/Mabry-Regular.woff2) format(woff2);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Mabry";
+  src: url(/fonts/Mabry-Italic.woff2) format(woff2);
+  font-style: italic;
+}
+@font-face {
+  font-family: "Mabry";
+  src: url(/fonts/Mabry-Bold.woff2) format(woff2);
+  font-weight: bold;
+}
+
 @theme {
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Mabry", "Inter", sans-serif;
   --font-mono: "Spline Sans Mono", "Maple Mono", monospace;
   --font-maple: "Maple Mono", "Spline Sans Mono", monospace;
   --color-void: var(--bg);

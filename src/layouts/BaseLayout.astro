@@ -112,9 +112,9 @@ const currentPath = Astro.url.pathname;
           <div class="text-xs text-muted mt-8 md:mt-auto pb-4 md:pb-0">
             <button
               id="theme-toggle"
-              class="flex items-center gap-2 border border-border px-2 py-1 hover:text-signal hover:border-signal transition-colors mb-4"
+              class="group flex items-center gap-4 px-6 py-2 border border-muted hover:border-accent hover:bg-accent transition-all duration-300 mb-4 text-sans text-sm hover:text-void"
             >
-              <span id="theme-icon">[ ]</span> MODE
+              <span id="theme-icon"></span> MODE
             </button>
             <div>
               IP: <span id="user-ip">127.0.0.1</span><br />
@@ -138,7 +138,24 @@ const currentPath = Astro.url.pathname;
             class="text-[12px] text-accent font-mono tracking-widest animate-pulse"
             >SCROLL_DOWN</span
           >
-          <span class="text-accent text-xl animate-pulse">↓</span>
+          <span class="text-accent text-xl animate-pulse"
+            ><svg
+              width="16"
+              height="12"
+              viewBox="0 0 16 12"
+              aria-hidden="true"
+              role="img"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              version="1.1"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              transform="matrix(6.123233995736766e-17,1,-1,6.123233995736766e-17,0,0)"
+            >
+              <path
+                d="M11.0161 4.48205C9.73854 3.57477 9.02498 2.33033 8.8754 0.748717C8.86559 0.640824 8.91341 0.574618 9.01885 0.550096L11.3251 0.00572808C11.3526 -0.000786781 11.3812 -0.00175522 11.4091 0.00287837C11.437 0.00751197 11.4637 0.0176552 11.4877 0.0327175C11.5117 0.0477799 11.5324 0.0674597 11.5487 0.0906112C11.5649 0.113763 11.5765 0.139923 11.5825 0.167567C12.1747 2.67239 12.8883 4.28343 15.783 4.62918C15.9277 4.64634 16 4.72726 16 4.87194V6.72205C16.0003 6.84617 15.957 6.96645 15.8777 7.06191C15.7984 7.15737 15.6881 7.22194 15.566 7.24435C13.1212 7.70289 11.8044 9.18151 11.6156 11.6802C11.6058 11.8224 11.531 11.8776 11.3913 11.8457L9.01885 11.2793C8.88398 11.2474 8.82636 11.164 8.84598 11.0292C9.07402 9.53584 9.76797 8.30856 10.9278 7.34734C11.0872 7.21492 11.0639 7.14872 10.8579 7.14872L0.426667 7.15975C0.313508 7.15975 0.204983 7.1148 0.124968 7.03478C0.0449522 6.95477 0 6.84624 0 6.73308V4.95285C0 4.83515 0.0600765 4.77508 0.18023 4.77262L10.9425 4.7101C11.2025 4.7101 11.227 4.63408 11.0161 4.48205Z"
+                fill="currentColor"></path>
+            </svg></span
+          >
         </div>
       </main>
     </div>
@@ -156,7 +173,10 @@ const currentPath = Astro.url.pathname;
 
       const currentTheme = localStorage.getItem("theme");
       if (icon) {
-        icon.innerText = currentTheme === "light" ? "[☾]" : "[☼]";
+        icon.innerHTML =
+          currentTheme === "light"
+            ? '<svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.272 2.406a1 1 0 0 0-1.23-1.355C6.59 1.535 5.432 2.487 4.37 3.55a11.399 11.399 0 0 0 0 16.182c4.518 4.519 11.51 4.261 15.976-.205 1.062-1.062 2.014-2.22 2.498-3.673A1 1 0 0 0 21.55 14.6c-3.59 1.322-7.675.734-10.434-2.025-2.765-2.766-3.328-6.83-1.844-10.168Z" fill="currentColor"/></svg>'
+            : '<svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)" fill="currentColor"><path d="M12 0a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V1a1 1 0 0 1 1-1ZM0 12a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1ZM21 11a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM13 21a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2ZM6.343 17.657a1 1 0 0 1 0 1.414L4.93 20.485a1 1 0 1 1-1.414-1.414l1.414-1.414a1 1 0 0 1 1.414 0ZM20.485 3.515a1 1 0 0 1 0 1.414l-1.414 1.414a1 1 0 1 1-1.414-1.414l1.414-1.414a1 1 0 0 1 1.414 0ZM3.515 3.515a1 1 0 0 1 1.414 0l1.414 1.414A1 1 0 1 1 4.93 6.343L3.515 4.93a1 1 0 0 1 0-1.414ZM17.657 17.657a1 1 0 0 1 1.414 0l1.414 1.414a1 1 0 1 1-1.414 1.414l-1.414-1.414a1 1 0 0 1 0-1.414ZM5 12a7 7 0 1 1 14 0 7 7 0 0 1-14 0Z"/></g><defs><clipPath id="a"><path fill="currentColor" d="M0 0h24v24H0z"/></clipPath></defs></svg>';
       }
 
       themeBtn?.addEventListener("click", () => {
@@ -164,11 +184,15 @@ const currentPath = Astro.url.pathname;
         if (current === "dark") {
           html.setAttribute("data-theme", "light");
           localStorage.setItem("theme", "light");
-          if (icon) icon.innerText = "[☾]";
+          if (icon)
+            icon.innerHTML =
+              '<svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.272 2.406a1 1 0 0 0-1.23-1.355C6.59 1.535 5.432 2.487 4.37 3.55a11.399 11.399 0 0 0 0 16.182c4.518 4.519 11.51 4.261 15.976-.205 1.062-1.062 2.014-2.22 2.498-3.673A1 1 0 0 0 21.55 14.6c-3.59 1.322-7.675.734-10.434-2.025-2.765-2.766-3.328-6.83-1.844-10.168Z" fill="currentColor"/></svg>';
         } else {
           html.setAttribute("data-theme", "dark");
           localStorage.setItem("theme", "dark");
-          if (icon) icon.innerText = "[☼]";
+          if (icon)
+            icon.innerHTML =
+              '<svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)" fill="currentColor"><path d="M12 0a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V1a1 1 0 0 1 1-1ZM0 12a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1ZM21 11a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM13 21a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2ZM6.343 17.657a1 1 0 0 1 0 1.414L4.93 20.485a1 1 0 1 1-1.414-1.414l1.414-1.414a1 1 0 0 1 1.414 0ZM20.485 3.515a1 1 0 0 1 0 1.414l-1.414 1.414a1 1 0 1 1-1.414-1.414l1.414-1.414a1 1 0 0 1 1.414 0ZM3.515 3.515a1 1 0 0 1 1.414 0l1.414 1.414A1 1 0 1 1 4.93 6.343L3.515 4.93a1 1 0 0 1 0-1.414ZM17.657 17.657a1 1 0 0 1 1.414 0l1.414 1.414a1 1 0 1 1-1.414 1.414l-1.414-1.414a1 1 0 0 1 0-1.414ZM5 12a7 7 0 1 1 14 0 7 7 0 0 1-14 0Z"/></g><defs><clipPath id="a"><path fill="currentColor" d="M0 0h24v24H0z"/></clipPath></defs></svg>';
         }
       });
 
