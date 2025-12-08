@@ -3,17 +3,10 @@ import "@fontsource-variable/inter";
 import "@fontsource-variable/inter/wght-italic.css";
 import "@fontsource-variable/spline-sans-mono";
 import "@fontsource-variable/spline-sans-mono/wght-italic.css";
-import "@fontsource/maple-mono/400.css";
-import "@fontsource/maple-mono/500.css";
-import "@fontsource/maple-mono/700.css";
-import "@fontsource/maple-mono/400-italic.css";
-import "@fontsource/maple-mono/500-italic.css";
-import "@fontsource/maple-mono/700-italic.css";
 import { intersection } from "astro:schema";
 import "../styles/global.css";
 const { title } = Astro.props;
 const currentPath = Astro.url.pathname;
-import CommandMenu from "../components/CommandMenu";
 ---
 
 <html lang="en" data-theme="dark">
@@ -47,7 +40,7 @@ import CommandMenu from "../components/CommandMenu";
   </head>
   <body class="bg-[#050505] text-signal font-mono antialiased overflow-hidden">
     <div
-      class="md:grid md:grid-cols-[280px_minmax(0,1fr)] content-start md:content-stretch h-screen max-w-[1600px] mx-auto md:border-x border-border bg-void"
+      class="grid grid-cols-1 md:grid-cols-[280px_minmax(0,1fr)] content-start md:content-stretch h-screen max-w-[1600px] mx-auto md:border-x border-border bg-void"
     >
       <aside
         id="sidebar"
@@ -125,7 +118,8 @@ import CommandMenu from "../components/CommandMenu";
             </button>
             <div>
               IP: <span id="user-ip">127.0.0.1</span><br />
-              SYS: <span id="clock">00:00</span>
+              SYS: <span id="clock">00:00</span><br />
+              TERM: <span id="user-device">DETECTING...</span>
             </div>
           </div>
         </div>
@@ -244,8 +238,28 @@ import CommandMenu from "../components/CommandMenu";
         .catch((error) => {
           console.log("System Info: IP detection blocked by client.", error);
         });
+      const getSystemInfo = () => {
+        const ua = navigator.userAgent;
+        let os = "UNKNOWN";
+        let browser = "UNKNOWN";
+
+        if (ua.indexOf("Win") !== -1) os = "WIN";
+        if (ua.indexOf("Mac") !== -1) os = "MACOS";
+        if (ua.indexOf("Linux") !== -1) os = "LINUX";
+        if (ua.indexOf("Android") !== -1) os = "ANDROID";
+        if (ua.indexOf("like Mac") !== -1) os = "IOS";
+
+        if (ua.indexOf("Chrome") !== -1) browser = "CHROME";
+        else if (ua.indexOf("Firefox") !== -1) browser = "FIREFOX";
+        else if (ua.indexOf("Safari") !== -1) browser = "SAFARI";
+        else if (ua.indexOf("Edge") !== -1) browser = "EDGE";
+
+        return `${browser} // ${os}`;
+      };
+
+      const deviceSpan = document.getElementById("user-device");
+      if (deviceSpan) deviceSpan.innerText = getSystemInfo();
     </script>
-    <CommandMenu client:idle />
   </body>
 </html>
 

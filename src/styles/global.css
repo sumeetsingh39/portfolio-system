@@ -1,9 +1,20 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Maple Mono";
+  src: url(/fonts/MapleMono-NF-Regular.ttf) format(truetype);
+  font-style: normal;
+}
+@font-face {
+  font-family: "Maple Mono";
+  src: url(/fonts/MapleMono-NF-Italic.ttf) format(truetype);
+  font-style: italic;
+}
+
 @theme {
   --font-sans: "Inter", sans-serif;
   --font-mono: "Spline Sans Mono", "Maple Mono", monospace;
-  --font-maple: "Maple Mono", monospace;
+  --font-maple: "Maple Mono", "Spline Sans Mono", monospace;
   --color-void: var(--bg);
   --color-signal: var(--text-main);
   --color-muted: var(--text-muted);
