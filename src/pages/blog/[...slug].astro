@@ -59,10 +59,13 @@ const formattedDate = entry.data.date
       </div>
 
       <h1
-        class="font-sans font-bold text-4xl md:text-6xl text-signal mb-6 leading-tight tracking-tight"
+        class="font-sans font-bold text-4xl md:text-6xl text-signal mb-3 leading-tight tracking-tight"
       >
         {entry.data.title}
       </h1>
+      <p class="font-sans text-xl md:text-2xl text-muted mb-6">
+        {entry.data.description}
+      </p>
 
       <div class="flex gap-2">
         {
