@@ -1,0 +1,91 @@
+---
+title: Building a Portfolio with Astro
+description: How I created dev portfolio in AstroJS in a day
+date: 2025-12-11
+tags:
+  - Astro
+  - JavaScript
+  - Tailwind
+---
+
+## The Stack
+
+- **Core:** Astro
+- **Styling:** Tailwind CSS
+- **Content:** MDX & Content Collections
+
+### The Architectural Decision
+
+For years, React has been my default solution for every problem. If a project had even a hint of state management, I’d spin up a React app. But for a portfolio, basically a static collection of text and images, it felt like over-engineering.
+
+I considered **SolidJS** for a moment as that is also new to me, but **Astro** offered an alternative: an architecture that ships zero JavaScript by default. The promise of "Islands" meant I could write semantic HTML/CSS for 90% of the site and only hydrate the interactive bits with React if needed.
+
+As for **Tailwind**, I usually prefer typed CSS (& CSS Modules), but for a solo project where I had limited time, Tailwind felt like a better option.
+
+## The Mental Shift
+
+Coming from React, the initial hurdle wasn't the syntax; it was the shift in mental model regarding routing and state.
+
+I spent time exploring the docs (which are great) and was amused by the CLI experience. "Houston," their CLI assistant, adds a layer of polish that suggests the team cares deeply about developer experience.
+
+The routing felt intuitive, very similar to the Next.js file system. I set up a `BaseLayout` to handle the global layout (Nav) and quickly created the three core routes: **About, Projects, and Blog.**
+
+## Design System: Swiss Style vs. Dark Mode
+
+I wanted the site to embody a **Paper / Magazine** aesthetic—grid-based, typography-heavy, and objective. However, this is traditionally reliant on high-contrast black-on-white layouts and does not translate well to dark mode.
+
+For a developer portfolio, lacking a dark mode is essentially blasphemy. The challenge was translating that stark Swiss look into a dark theme without losing the "paper-like" feel. I needed a color system that maintained contrast ratios without causing eye strain.
+
+I settled on a monochrome palette with a single high-visibility accent color (`#ff4d00`) to guide the eye:
+
+```css
+:root {
+  /* Default to Dark Mode first */
+  --bg: #050505;
+  --text-main: #eeeeee;
+  --text-muted: #9c9c9c;
+  --border: #222222;
+  --accent: #ff4d00;
+}
+
+[data-theme="light"] {
+  --bg: #fafafa;
+  --text-main: #111111;
+  --text-muted: #555555;
+  --border: #e0e0e0;
+  --accent: #ff4d00; /* Works across both polarities */
+}
+```
+
+To add some flair, I mixed the Swiss layout with a "retro-terminal" feel.
+
+## UX Refinements
+
+A common issue in minimal designs is a lack of direction. The layout was so simple that it wasn't immediately obvious there was more content below the fold.
+
+To fix this, I added a subtle scroll indicator for desktop users.
+Sticking to the terminal theme, I also injected system info into the header, displaying the user's IP, system time, and device info.
+
+## Adding the content
+
+The most critical requirement was a friction-free writing workflow. I didn't want to fight with a CMS and add another thing to worry about; I wanted to push Markdown to a repo and be done.
+
+Astro’s **Content Collections** are great at that. Collections allow you to define a Zod schema for your content. If I forget a date or a tag, the build fails immediately.
+
+### The "Obsidian" Integration
+
+I write everything in **Obsidian**. My notes are full of custom callouts (blockquotes with specific metadata). To maintain that, I wrote a small script to parse these callouts and render them on the blog with the same style as my Obsidian vault, but with the site’s theme.
+E.g.,
+
+> [!info]
+> This is info block
+
+> [!bug]
+> This block is for bugs
+
+> [!warning]
+> This is a warning.
+
+## Final thoughts
+
+Building in Astro was a fun experience. It let me create a simple blog site in a day. I can also add React components to the site and blogs if I wish to later. The site is fast, accessible even with JavaScript disabled, and was built in a fraction of the time it would have taken to configure a Next.js app.
