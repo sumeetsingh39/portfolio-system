@@ -1,0 +1,73 @@
+---
+name: "Telemetry Extension"
+description: "An extension that collects user telemetry data to award points in an internal game."
+url: "https://google.com"
+tech: ["Javascript", "Chrome Extension API"]
+year: "2025"
+status: "internal"
+caseStudy: true
+---
+
+> [!info]
+> This is an internal project and is not publicly accessible.
+
+# Overview
+
+The _Telemetry Extension_ is an chrome extension designed to collect user telemetry data. The collected data is used to award points in an internal gamification system.
+The extension operates in the background, monitoring user interactions, which is then compared against predefined criteria to allocate points accordingly.
+
+# Features
+
+- **Data Collection**: Monitors user activities such as page visits, clicks, scroll, uploads etc.
+- **Point System**: Awards points based on user interactions, encouraging engagement. More user interacts with the webpage and takes time to go through the content and configurations, more points are awarded.
+- **Privacy Focused**: Only the points and user ID are transmitted back through internal API. No sensitive data is collected.
+
+# Technologies Used
+
+- **JavaScript**: Core programming language used for developing the extension.
+- **Chrome Extension API**: Used for creating the extension and accessing browser functionalities.
+- **Internal API**: For transmitting collected data securely.
+
+# Installation
+
+1. Download the extension package from the internal repository.
+2. Open Chrome and navigate to `chrome://extensions/`.
+3. Enable "Developer mode" using the toggle in the top right corner.
+4. Click on "Load unpacked" and select the downloaded extension folder.
+5. The extension should now be installed and active in your browser.
+
+# Usage
+
+Once installed, the extension will automatically start collecting telemetry data in the background. Users can view their points and other statistics on the extension popup.
+
+# File structure of the extension:
+
+```
+/telemetry-extension
+├── /content_scripts
+│   └── content.js
+│├── /background
+│   └── background.js
+│├── /popup
+│   ├── popup.html
+│   ├── popup.js
+│   └── popup.css
+│├── manifest.json
+└── /icons
+    ├── icon.png
+
+```
+
+- **Content Script**: Injected into the target web page to fetch user ID and monitor interactions.
+- **Background Script**: Runs in the background to and gets events from `content script`, and compares it to a fetched json.
+- **Popup**: Provides a user interface to display points and statistics.
+
+# Extension Flow
+
+- Once user installs the extension and opens the target website, the extension starts monitoring user interactions.
+- The extension first fetches the user ID from the web page itself, if user is not logged in, extension does not collect any data and show a message to login on the popup.
+- Once user is logged in, extension starts collecting telemetry data.
+- Every event is compared against predefined criteria to allocate points accordingly.
+- The collected data is transmitted back to the internal API only when points are awarded.
+- Extension popup displays logged in status, total points, which criteria points were awarded for and last 20 events.
+- Once user logs out from the website, extension stops collecting and deletes all the data.

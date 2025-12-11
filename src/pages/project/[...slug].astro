@@ -1,0 +1,240 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const projectEntries = await getCollection("project");
+  return projectEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={`PROJECT // ${entry.data.name}`}>
+  <div class="max-w-3xl opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
+    <a
+      href="/projects"
+      class="group inline-flex items-center text-sm text-muted mb-12 hover:text-accent transition-colors"
+    >
+      <span
+        class="mr-2 group-hover:-translate-x-1 transition-transform font-mono"
+        ><svg
+          width="12"
+          height="10"
+          viewBox="0 0 16 12"
+          aria-hidden="true"
+          role="img"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          class="rotate-180"
+        >
+          <path
+            d="M11.0161 4.48205C9.73854 3.57477 9.02498 2.33033 8.8754 0.748717C8.86559 0.640824 8.91341 0.574618 9.01885 0.550096L11.3251 0.00572808C11.3526 -0.000786781 11.3812 -0.00175522 11.4091 0.00287837C11.437 0.00751197 11.4637 0.0176552 11.4877 0.0327175C11.5117 0.0477799 11.5324 0.0674597 11.5487 0.0906112C11.5649 0.113763 11.5765 0.139923 11.5825 0.167567C12.1747 2.67239 12.8883 4.28343 15.783 4.62918C15.9277 4.64634 16 4.72726 16 4.87194V6.72205C16.0003 6.84617 15.957 6.96645 15.8777 7.06191C15.7984 7.15737 15.6881 7.22194 15.566 7.24435C13.1212 7.70289 11.8044 9.18151 11.6156 11.6802C11.6058 11.8224 11.531 11.8776 11.3913 11.8457L9.01885 11.2793C8.88398 11.2474 8.82636 11.164 8.84598 11.0292C9.07402 9.53584 9.76797 8.30856 10.9278 7.34734C11.0872 7.21492 11.0639 7.14872 10.8579 7.14872L0.426667 7.15975C0.313508 7.15975 0.204983 7.1148 0.124968 7.03478C0.0449522 6.95477 0 6.84624 0 6.73308V4.95285C0 4.83515 0.0600765 4.77508 0.18023 4.77262L10.9425 4.7101C11.2025 4.7101 11.227 4.63408 11.0161 4.48205Z"
+            fill="currentColor"></path>
+        </svg></span
+      > BACK_TO_PROJECTS
+    </a>
+
+    <header class="mb-12 border-b border-border pb-8">
+      <div
+        class="flex items-center gap-4 mb-4 text-xs font-mono text-muted tracking-widest"
+      >
+        <span>LOG_ID: {entry.slug.toUpperCase()}</span>
+      </div>
+
+      <h1
+        class="font-sans font-bold text-4xl md:text-6xl text-signal mb-3 leading-tight tracking-tight"
+      >
+        {entry.data.name}
+      </h1>
+      <p class="font-sans text-xl md:text-2xl text-muted mb-6">
+        {entry.data.description}
+      </p>
+
+      <div class="flex gap-2">
+        {
+          entry.data.tech.map((tag: string) => (
+            <span class="text-[10px] px-2 py-1 border border-border text-muted font-mono rounded">
+              {tag}
+            </span>
+          ))
+        }
+      </div>
+    </header>
+
+    <article class="prose-system">
+      <Content />
+    </article>
+  </div>
+</BaseLayout>
+
+<script>
+  const blockquotes = document.querySelectorAll(".prose-system blockquote");
+
+  blockquotes.forEach((bq) => {
+    const p = bq.querySelector("p");
+    if (!p) return;
+
+    const content = p.innerHTML;
+    const match = content.match(/^\[!(.*?)\]/);
+
+    if (match) {
+      const type = match[1].toLowerCase(); // info, warning, danger, etc.
+
+      bq.setAttribute("data-callout", type);
+
+      p.innerHTML = content.replace(/^\[!.*?\]\s*/, "");
+
+      const label = document.createElement("div");
+      label.className = "callout-label";
+      label.innerText = `:: SYSTEM_${type.toUpperCase()}`;
+      bq.prepend(label);
+    }
+  });
+</script>
+
+<style is:global>
+  .prose-system {
+    color: var(--text-muted);
+    font-family: "Mabry Pro", "Spline Sans Mono", monospace;
+    line-height: 1.8;
+    font-size: 1.4rem;
+  }
+
+  .img-container p {
+    font-size: 1rem;
+  }
+
+  .prose-system h1,
+  .prose-system h2,
+  .prose-system h3 {
+    color: var(--text-main);
+    font-family: "Mabry Pro", sans-serif;
+    font-weight: 800;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .prose-system h2 {
+    font-size: 2rem;
+  }
+  .prose-system h3 {
+    font-size: 1.6rem;
+  }
+
+  .prose-system p {
+    margin-bottom: 1.5rem;
+  }
+  .prose-system strong {
+    color: var(--text-main);
+    font-weight: 600;
+  }
+  .prose-system a {
+    color: var(--text-main);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 4px;
+  }
+  .prose-system a:hover {
+    color: var(--accent);
+  }
+
+  .prose-system pre {
+    background-color: #0d0d0d !important; /* Force Void-like background */
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 0;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+
+  .prose-system code {
+    font-family: "Maple Mono", "Spline Sans Mono", monospace;
+    font-size: 1.1rem;
+  }
+
+  .prose-system p code {
+    font-family: "Spline Sans Mono", monospace;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    color: var(--text-main);
+  }
+
+  /* --- OBSIDIAN CALLOUTS STYLING --- */
+  .prose-system blockquote {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 2px solid var(--border);
+    position: relative;
+  }
+
+  .callout-label {
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-family: "Mabry Pro", "Inter", sans-serif;
+  }
+
+  /* INFO / NOTE (Blue/Cyan) */
+  .prose-system blockquote[data-callout="info"],
+  .prose-system blockquote[data-callout="tip"],
+  .prose-system blockquote[data-callout="note"] {
+    border-left-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.05);
+  }
+  .prose-system blockquote[data-callout="info"] .callout-label,
+  .prose-system blockquote[data-callout="tip"] .callout-label,
+  .prose-system blockquote[data-callout="note"] .callout-label {
+    color: #3b82f6;
+  }
+
+  /* WARNING / ALERT (Accent/Orange) */
+  .prose-system blockquote[data-callout="warning"],
+  .prose-system blockquote[data-callout="important"],
+  .prose-system blockquote[data-callout="alert"] {
+    border-left-color: var(--accent);
+    background: rgba(255, 77, 0, 0.05);
+  }
+  .prose-system blockquote[data-callout="warning"] .callout-label,
+  .prose-system blockquote[data-callout="important"] .callout-label,
+  .prose-system blockquote[data-callout="alert"] .callout-label {
+    color: var(--accent);
+  }
+
+  /* ERROR / DANGER (Red) */
+  .prose-system blockquote[data-callout="danger"],
+  .prose-system blockquote[data-callout="bug"],
+  .prose-system blockquote[data-callout="error"] {
+    border-left-color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+  }
+  .prose-system blockquote[data-callout="danger"] .callout-label,
+  .prose-system blockquote[data-callout="bug"] .callout-label,
+  .prose-system blockquote[data-callout="error"] .callout-label {
+    color: #ef4444;
+  }
+</style>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

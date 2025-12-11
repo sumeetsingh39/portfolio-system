@@ -1,27 +1,12 @@
 ---
 import { promise } from "astro:schema";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
 
-const projects = [
-  {
-    name: "Covid Tracker",
-    description:
-      "A simple Covid-19 tracker for the world. Map and Graph displaying data accordingly",
-    tech: ["ReactJS", "Firebase"],
-    year: "2020",
-    url: "https://covid-19-tracker-f57fd.web.app/",
-    status: "archived",
-  },
-  {
-    name: "Terminal Contact",
-    description:
-      "A elegant page containg little about me and links in terminal style",
-    tech: ["HTML", "SASS", "JavaScript", "WinboxJS"],
-    year: "2019",
-    url: "https://sumeetsingh39.github.io/Terminal_Contact/",
-    status: "archived",
-  },
-];
+const posts = await getCollection("project");
+const allPosts = posts.sort((a, b) => {
+  return (+b.data.year || 0) - (+a.data.year || 0);
+});
 ---
 
 <BaseLayout title="PROJECTS // SUMEET">
@@ -46,14 +31,18 @@ const projects = [
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {
-        projects.map((project) => {
+        allPosts.map((project) => {
           let statusClass = "bg-accent";
-          if (project.status == "stable") {
+          if (project.data.status == "stable") {
             statusClass = "bg-green-500";
-          } else if (project.status == "wip") {
+          } else if (project.data.status == "wip") {
             statusClass = "bg-yellow-600";
-          } else if (project.status == "archived") {
+          } else if (project.data.status == "archived") {
             statusClass = "bg-gray-500";
+          } else if (project.data.status == "internal") {
+            statusClass = "bg-blue-500";
+          } else if (project.data.status == "down") {
+            statusClass = "bg-red-500";
           }
           return (
             <article class="group border border-border p-6 hover:border-accent transition-colors duration-300 flex flex-col h-full bg-void">
@@ -63,12 +52,18 @@ const projects = [
                     class={`w-2 h-2 rounded-full animate-pulse ${statusClass}`}
                   />
                   <span class="text-xs text-muted font-mono">
-                    {project.status.toLocaleUpperCase()} // {project.year}
+                    {project.data.status.toLocaleUpperCase()} //{" "}
+                    {project.data.year ? project.data.year : "N/A"}
                   </span>
                 </div>
+
                 <a
-                  href={project.url}
-                  target="_blank"
+                  href={
+                    project.data.caseStudy
+                      ? `/project/${project.slug}`
+                      : project.data.url
+                  }
+                  target={project.data.caseStudy ? "_self" : "_blank"}
                   class="group text-muted hover:text-accent transition-colors"
                 >
                   <svg
@@ -90,13 +85,13 @@ const projects = [
                 </a>
               </div>
               <h2 class="font-sans font-bold text-3xl text-signal mb-4 group-hover:translate-x-1 transition-transform">
-                {project.name}
+                {project.data.name}
               </h2>
               <p class="text-muted mb-8 grow leading-relaxed font-sans text-xl">
-                {project.description}
+                {project.data.description}
               </p>
               <div class="flex flex-wrap gap-2 mt-auto">
-                {project.tech.map((t) => {
+                {project.data.tech.map((t) => {
                   return (
                     <span class="text-xs font-mono border border-border px-2 py-1 text-muted group-hover:text-signal transition-colors">
                       [{t}]
